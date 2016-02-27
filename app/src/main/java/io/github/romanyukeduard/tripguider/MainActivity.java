@@ -15,6 +15,6 @@ public class MainActivity extends AppCompatActivity {
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle(R.string.app_name);
-        getSupportActionBar(mToolbar);
+        setSupportActionBar(mToolbar);
     }
 }
