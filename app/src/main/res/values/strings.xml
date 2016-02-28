@@ -14,4 +14,9 @@
     <string name="drawer_places_hotel">Hotels</string>
     <string name="drawer_places_shop">Shopping</string>
     <string name="drawer_places_night">Nightlife</string>
+
+    <string name="detail_info">Information</string>
+    <string name="detail_description">Description</string>
+
+    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed maximus iaculis turpis, eu aliquam enim auctor non. Proin tortor risus, finibus id aliquet vitae, tincidunt sit amet tellus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In sit amet nulla quis tellus venenatis laoreet. Mauris tincidunt in nibh maximus ultricies. Phasellus sodales massa maximus auctor pulvinar. Duis quis quam id felis sodales imperdiet. Donec facilisis vitae ligula ut lacinia. Donec sit amet faucibus leo. Suspendisse quam libero, convallis sed risus vel, tristique dignissim ex. Suspendisse quis eros rutrum, convallis ligula id, efficitur lorem</string>
 </resources>

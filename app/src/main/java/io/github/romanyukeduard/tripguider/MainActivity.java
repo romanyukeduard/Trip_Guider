@@ -6,7 +6,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Toast;
 
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -31,6 +30,10 @@ public class MainActivity extends AppCompatActivity {
         initToolbar();
         initDrawer();
         initFAB();
+
+        /*ImageView img = (ImageView) findViewById(R.id.image);
+        Picasso.with(this).load("https://upload.wikimedia.org/wikipedia/commons/9/92/Big_Sur_Coast_California.JPG").into(img);*/
+
     }
 
     private void initFAB() {
@@ -69,12 +72,14 @@ public class MainActivity extends AppCompatActivity {
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        if(drawerItem.getIdentifier() == 2){
-                            Intent intent = new Intent(MainActivity.this, PlacesActivity.class);
+                        if (drawerItem.getIdentifier() == 2) {
+                            Intent intent = new Intent(MainActivity.this, PlacesListActivity.class);
                             startActivity(intent);
-                        }else if(drawerItem.getIdentifier() == 3){
-                            Toast toast = Toast.makeText(MainActivity.this, "info", Toast.LENGTH_SHORT);
-                            toast.show();
+                        } else if (drawerItem.getIdentifier() == 3) {
+                            Intent intent = new Intent(MainActivity.this, PlaceActivity.class);
+                            startActivity(intent);
+                            /*Toast toast = Toast.makeText(MainActivity.this, "info", Toast.LENGTH_SHORT);
+                            toast.show();*/
                         }
                         return false;
                     }
@@ -91,4 +96,6 @@ public class MainActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
+
+
 }
