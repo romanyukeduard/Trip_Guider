@@ -2,6 +2,7 @@ package io.github.romanyukeduard.tripguider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     Drawer mDrawer;
     Toolbar mToolbar;
+    FloatingActionButton mFAB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,17 @@ public class MainActivity extends AppCompatActivity {
 
         initToolbar();
         initDrawer();
+        initFAB();
+    }
+
+    private void initFAB() {
+        mFAB = (FloatingActionButton) findViewById(R.id.fab);
+        mFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Do something
+            }
+        });
     }
 
     private void initToolbar() {
@@ -56,11 +69,12 @@ public class MainActivity extends AppCompatActivity {
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        if(drawerItem.getIdentifier() == 1){
-
-                        }else if(drawerItem.getIdentifier() == 2){
+                        if(drawerItem.getIdentifier() == 2){
                             Intent intent = new Intent(MainActivity.this, PlacesActivity.class);
                             startActivity(intent);
+                        }else if(drawerItem.getIdentifier() == 3){
+                            Toast toast = Toast.makeText(MainActivity.this, "info", Toast.LENGTH_SHORT);
+                            toast.show();
                         }
                         return false;
                     }

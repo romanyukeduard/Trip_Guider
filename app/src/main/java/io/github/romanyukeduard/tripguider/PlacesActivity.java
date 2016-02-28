@@ -2,6 +2,7 @@ package io.github.romanyukeduard.tripguider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -21,6 +22,7 @@ public class PlacesActivity extends AppCompatActivity{
 
     Drawer mDrawer;
     Toolbar mToolbar;
+    FloatingActionButton mFAB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,17 @@ public class PlacesActivity extends AppCompatActivity{
 
         initToolbar();
         initDrawer();
+        initFAB();
+    }
+
+    private void initFAB() {
+        mFAB = (FloatingActionButton) findViewById(R.id.fab);
+        mFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Do something
+            }
+        });
     }
 
     private void initToolbar() {
