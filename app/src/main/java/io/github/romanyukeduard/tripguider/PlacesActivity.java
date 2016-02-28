@@ -14,9 +14,10 @@ import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
-public class MainActivity extends AppCompatActivity {
+public class PlacesActivity extends AppCompatActivity{
 
     Drawer mDrawer;
     Toolbar mToolbar;
@@ -24,7 +25,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_layout);
+
+        setContentView(R.layout.places_layout);
 
         initToolbar();
         initDrawer();
@@ -32,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle(R.string.app_name);
+        mToolbar.setTitle("All places");
         setSupportActionBar(mToolbar);
     }
 
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         AccountHeader mHeader = new AccountHeaderBuilder()
                 .withActivity(this)
                 .withHeaderBackground(R.drawable.header)
+                .withCompactStyle(true)
                 .build();
 
         mDrawer = new DrawerBuilder()
@@ -48,19 +51,35 @@ public class MainActivity extends AppCompatActivity {
                 .withAccountHeader(mHeader)
                 .withActionBarDrawerToggleAnimated(true)
                 .addDrawerItems(
-                        new PrimaryDrawerItem().withName("Home").withIcon(R.drawable.ic_home).withIdentifier(1),
-                        new PrimaryDrawerItem().withName("Login").withIcon(R.drawable.ic_login).withIdentifier(2).withSelectable(false),
-                        new DividerDrawerItem(),
-                        new SecondaryDrawerItem().withName("Information").withIcon(R.drawable.ic_information).withIdentifier(3).withSelectable(false)
+                        new PrimaryDrawerItem().withName("All Places").withIcon(R.drawable.ic_map_marker).withIdentifier(1),
+                        new PrimaryDrawerItem().withName("Favorites").withIcon(R.drawable.ic_fav).withIdentifier(2),
+                        new SectionDrawerItem().withName("Categories:"),
+                        new SecondaryDrawerItem().withName("Food").withIcon(R.drawable.ic_food).withIdentifier(3),
+                        new SecondaryDrawerItem().withName("Sport").withIcon(R.drawable.ic_tennis).withIdentifier(4),
+                        new SecondaryDrawerItem().withName("Attractions").withIcon(R.drawable.ic_camera).withIdentifier(5),
+                        new SecondaryDrawerItem().withName("Hotels").withIcon(R.drawable.ic_seat_individual_suite).withIdentifier(6),
+                        new SecondaryDrawerItem().withName("Shopping").withIcon(R.drawable.ic_shopping).withIdentifier(7),
+                        new SecondaryDrawerItem().withName("Hightlife").withIcon(R.drawable.ic_weather_night).withIdentifier(8)
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         if(drawerItem.getIdentifier() == 1){
-
+                            mToolbar.setTitle("All places");
                         }else if(drawerItem.getIdentifier() == 2){
-                            Intent intent = new Intent(MainActivity.this, PlacesActivity.class);
-                            startActivity(intent);
+                            mToolbar.setTitle("Favorites");
+                        }else if(drawerItem.getIdentifier() == 3){
+                            mToolbar.setTitle("Food");
+                        }else if(drawerItem.getIdentifier() == 4){
+                            mToolbar.setTitle("Sport");
+                        }else if(drawerItem.getIdentifier() == 5){
+                            mToolbar.setTitle("Attractions");
+                        }else if(drawerItem.getIdentifier() == 6){
+                            mToolbar.setTitle("Hotels");
+                        }else if(drawerItem.getIdentifier() == 7){
+                            mToolbar.setTitle("Shopping");
+                        }else if(drawerItem.getIdentifier() == 8){
+                            mToolbar.setTitle("Hightlife");
                         }
                         return false;
                     }
