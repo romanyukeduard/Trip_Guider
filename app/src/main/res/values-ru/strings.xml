@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="drawer_main_home">Главная</string>
+    <string name="drawer_main_info">Информация</string>
+    <string name="drawer_main_login">Ввойти</string>
+    <string name="drawer_places_all">Все места</string>
+    <string name="drawer_places_attr">Развлечения</string>
+    <string name="drawer_places_cat">Категории</string>
+    <string name="drawer_places_fav">Избранные</string>
+    <string name="drawer_places_food">Еда</string>
+    <string name="drawer_places_hotel">Отели</string>
+    <string name="drawer_places_night">Ночная жизнь</string>
+    <string name="drawer_places_shop">Покупки</string>
+    <string name="drawer_places_sport">Спорт</string>
+</resources>

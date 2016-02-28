@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="drawer_main_home">Головна</string>
+    <string name="drawer_main_info">Інформація</string>
+    <string name="drawer_main_login">Увійти</string>
+    <string name="drawer_places_all">Всі місця</string>
+    <string name="drawer_places_attr">Розваги</string>
+    <string name="drawer_places_cat">Категорії</string>
+    <string name="drawer_places_fav">Вибране</string>
+    <string name="drawer_places_food">Їжа</string>
+    <string name="drawer_places_hotel">Готелі</string>
+    <string name="drawer_places_night">Нічне життя</string>
+    <string name="drawer_places_shop">Покупки</string>
+    <string name="drawer_places_sport">Спорт</string>
+</resources>

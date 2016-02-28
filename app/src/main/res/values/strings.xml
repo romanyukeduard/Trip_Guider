@@ -1,3 +1,17 @@
 <resources>
-    <string name="app_name">Trip Guider</string>
+    <string name="app_name" translatable="false">Trip Guider</string>
+
+    <string name="drawer_main_home">Home</string>
+    <string name="drawer_main_login">Login</string>
+    <string name="drawer_main_info">Information</string>
+
+    <string name="drawer_places_all">All places</string>
+    <string name="drawer_places_fav">Favourites</string>
+    <string name="drawer_places_cat">Categories</string>
+    <string name="drawer_places_food">Food</string>
+    <string name="drawer_places_sport">Sport</string>
+    <string name="drawer_places_attr">Attractions</string>
+    <string name="drawer_places_hotel">Hotels</string>
+    <string name="drawer_places_shop">Shopping</string>
+    <string name="drawer_places_night">Nightlife</string>
 </resources>

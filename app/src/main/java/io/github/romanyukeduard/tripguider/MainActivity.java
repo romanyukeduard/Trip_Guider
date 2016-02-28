@@ -48,10 +48,10 @@ public class MainActivity extends AppCompatActivity {
                 .withAccountHeader(mHeader)
                 .withActionBarDrawerToggleAnimated(true)
                 .addDrawerItems(
-                        new PrimaryDrawerItem().withName("Home").withIcon(R.drawable.ic_home).withIdentifier(1),
-                        new PrimaryDrawerItem().withName("Login").withIcon(R.drawable.ic_login).withIdentifier(2).withSelectable(false),
+                        new PrimaryDrawerItem().withName(R.string.drawer_main_home).withIcon(R.drawable.ic_home).withIdentifier(1),
+                        new PrimaryDrawerItem().withName(R.string.drawer_main_login).withIcon(R.drawable.ic_login).withIdentifier(2).withSelectable(false),
                         new DividerDrawerItem(),
-                        new SecondaryDrawerItem().withName("Information").withIcon(R.drawable.ic_information).withIdentifier(3).withSelectable(false)
+                        new SecondaryDrawerItem().withName(R.string.drawer_main_info).withIcon(R.drawable.ic_information).withIdentifier(3).withSelectable(false)
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
