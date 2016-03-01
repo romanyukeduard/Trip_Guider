@@ -18,6 +18,8 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 public class MainActivity extends AppCompatActivity {
 
+    String url = "http://images4.fanpop.com/image/photos/21200000/Lutsk-castle-ukraine-21240842-620-465.jpg";
+
     Drawer mDrawer;
     Toolbar mToolbar;
     FloatingActionButton mFAB;
@@ -32,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         initFAB();
 
         /*ImageView img = (ImageView) findViewById(R.id.image);
-        Picasso.with(this).load("https://upload.wikimedia.org/wikipedia/commons/9/92/Big_Sur_Coast_California.JPG").into(img);*/
+        Picasso.with(this).load(url).into(img);*/
 
     }
 
@@ -88,14 +90,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed(){
-        if(mDrawer.isDrawerOpen()){
+    public void onBackPressed() {
+        if (mDrawer.isDrawerOpen()) {
             mDrawer.closeDrawer();
-        }
-        else{
+        } else {
             super.onBackPressed();
         }
     }
-
-
 }
