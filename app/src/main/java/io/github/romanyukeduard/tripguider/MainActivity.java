@@ -2,11 +2,18 @@ package io.github.romanyukeduard.tripguider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -16,26 +23,115 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import io.github.romanyukeduard.tripguider.app.AppController;
+
 public class MainActivity extends AppCompatActivity {
 
-    String url = "http://images4.fanpop.com/image/photos/21200000/Lutsk-castle-ukraine-21240842-620-465.jpg";
+    private String url = "http://goodbadcity.com/trip/cities";//міста
+    private String places = "http://goodbadcity.com/trip/places/1";//місця
 
-    Drawer mDrawer;
-    Toolbar mToolbar;
-    FloatingActionButton mFAB;
+    private TextView txtResponse;
+    private String jsonResponse;
+
+    private Drawer mDrawer;
+    private Toolbar mToolbar;
+    private FloatingActionButton mFAB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
 
+        txtResponse = (TextView) findViewById(R.id.teeest);
+
         initToolbar();
         initDrawer();
         initFAB();
+        checkInternet();
 
         /*ImageView img = (ImageView) findViewById(R.id.image);
         Picasso.with(this).load(url).into(img);*/
 
+    }
+
+    private void checkInternet() {
+
+        ConnectionDetector cd = new ConnectionDetector(getApplicationContext());
+        Boolean isInternetPresent = cd.isConnectingToInternet();
+        CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id
+                .main_cl);
+        if(!isInternetPresent){
+            Snackbar disconnect = Snackbar
+                    .make(coordinatorLayout, R.string.internet_snack_txt, Snackbar.LENGTH_INDEFINITE)
+                    .setAction(R.string.internet_snack_btn, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            checkInternet();
+                        }
+                    });
+
+            disconnect.show();
+        }
+        else{
+            cityRequest();
+        }
+
+    }
+
+    private void cityRequest() {
+        JsonArrayRequest req = new JsonArrayRequest(places,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+
+                        try {
+                            jsonResponse = "";
+                            for (int i = 0; i < response.length(); i++) {
+
+                                JSONObject places = (JSONObject) response
+                                        .get(i);
+
+                                String id = places.getString("id");
+                                String city_id = places.getString("city_id");
+                                String name = places.getString("name");
+                                String coord_lat = places.getString("coord_lat");
+                                String coord_lng = places.getString("coord_lng");
+                                String category_id = places.getString("category_id");
+                                String photo_url = places.getString("photo_url");
+
+                                jsonResponse += "Id: " + id + "\n\n";
+                                jsonResponse += "City id: " + city_id + "\n\n";
+                                jsonResponse += "Name: " + name + "\n\n";
+                                jsonResponse += "Latitude: " + coord_lat + "\n\n";
+                                jsonResponse += "Longetude: " + coord_lng + "\n\n";
+                                jsonResponse += "Category id: " + category_id + "\n\n";
+                                jsonResponse += "Url: " + "http://goodbadcity.com" + photo_url + "\n\n";
+
+                            }
+
+                            txtResponse.setText(jsonResponse);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(getApplicationContext(),
+                                    "Error: " + e.getMessage(),
+                                    Toast.LENGTH_LONG).show();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(),
+                        error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        AppController.getInstance().addToRequestQueue(req);
     }
 
     private void initFAB() {

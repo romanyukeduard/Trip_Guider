@@ -2,6 +2,7 @@
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_cl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/background_light"
@@ -18,14 +19,18 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <!--<android.support.v4.widget.NestedScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <TextView
+            android:id="@+id/teeest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="JSON here!"/>
 
-
-    </android.support.v4.widget.NestedScrollView>-->
+    </android.support.v4.widget.NestedScrollView>
 
     <include
         android:id="@+id/fab"

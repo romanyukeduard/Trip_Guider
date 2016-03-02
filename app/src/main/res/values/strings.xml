@@ -1,5 +1,8 @@
 <resources>
-    <string name="app_name" translatable="false">Trip Guider</string>
+    <string name="app_name" translatable="false">Trip Guider v.2</string>
+
+    <string name="internet_snack_txt" translatable="false">No internet connection</string>
+    <string name="internet_snack_btn" translatable="false">Try again</string>
 
     <string name="drawer_main_home">Home</string>
     <string name="drawer_main_login">Login</string>
