@@ -1,8 +1,11 @@
 <resources>
     <string name="app_name" translatable="false">Trip Guider v.2</string>
 
-    <string name="internet_snack_txt" translatable="false">No internet connection</string>
-    <string name="internet_snack_btn" translatable="false">Try again</string>
+    <string name="internet_snack_txt">No internet connection</string>
+    <string name="internet_snack_btn">Try again</string>
+
+    <string name="fab_menu_favourite">Add to favourite</string>
+    <string name="fab_menu_plans">Add to plans</string>
 
     <string name="drawer_main_home">Home</string>
     <string name="drawer_main_login">Login</string>

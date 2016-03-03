@@ -51,14 +51,39 @@
 
     </android.support.v4.widget.NestedScrollView>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_fav"
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/action_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:src="@drawable/ic_heart_outline"
-        app:fabSize="mini"
+        android:layout_margin="16dp"
         app:layout_anchor="@id/appbar"
-        app:layout_anchorGravity="bottom|right|end"/>
+        app:layout_anchorGravity="bottom|right|end"
+        app:fab_expandDirection="down"
+        app:fab_addButtonColorNormal="@color/fab_menu_main_normal"
+        app:fab_addButtonColorPressed="@color/fab_menu_main_pressed"
+        app:fab_addButtonPlusIconColor="@color/fab_menu_main_plus"
+        app:fab_labelStyle="@style/MenuLabelsStyle">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_fav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_size="mini"
+            app:fab_icon="@drawable/ic_heart_outline"
+            app:fab_title="@string/fab_menu_favourite"
+            app:fab_colorNormal="@color/fab_menu_action_normal"
+            app:fab_colorPressed="@color/fab_menu_action_pressed"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_plan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_size="mini"
+            app:fab_icon="@drawable/ic_book_plus"
+            app:fab_title="@string/fab_menu_plans"
+            app:fab_colorNormal="@color/fab_menu_action_normal"
+            app:fab_colorPressed="@color/fab_menu_action_pressed"/>
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
 </android.support.design.widget.CoordinatorLayout>
