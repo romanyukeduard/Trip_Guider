@@ -1,5 +1,6 @@
 package io.github.romanyukeduard.tripguider;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -17,15 +18,23 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 public class PlacesListActivity extends AppCompatActivity{
 
-    Drawer mDrawer;
-    Toolbar mToolbar;
-    FloatingActionButton mFAB;
+    private String city;
+    private String city_id;
+
+    private Drawer mDrawer;
+    private Toolbar mToolbar;
+    private FloatingActionButton mFAB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.placeslist_layout);
+
+        Intent intent = getIntent();
+
+        city = intent.getStringExtra("title");
+        city_id = intent.getStringExtra("city_id");
 
         initToolbar();
         initDrawer();
@@ -44,7 +53,7 @@ public class PlacesListActivity extends AppCompatActivity{
 
     private void initToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle(R.string.drawer_places_all);
+        mToolbar.setTitle(city);
         setSupportActionBar(mToolbar);
     }
 

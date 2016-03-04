@@ -1,19 +1,24 @@
 package io.github.romanyukeduard.tripguider;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -22,17 +27,23 @@ import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import io.github.romanyukeduard.tripguider.app.AppController;
+import java.util.ArrayList;
+import java.util.List;
+
+import io.github.romanyukeduard.tripguider.cities_recycler_view.ListItems;
+import io.github.romanyukeduard.tripguider.cities_recycler_view.MyRecyclerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String url = "http://goodbadcity.com/trip/cities";//міста
-    private String places = "http://goodbadcity.com/trip/places/1";//місця
+
+    //"http://goodbadcity.com/trip/cities";//міста
+    //"http://goodbadcity.com/trip/places/1";//місця
 
     private TextView txtResponse;
     private String jsonResponse;
@@ -41,20 +52,46 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private FloatingActionButton mFAB;
 
+    private List<ListItems> mListItemsList = new ArrayList<ListItems>();
+    private MyRecyclerAdapter mAdapter;
+    private RecyclerView mRecyclerView;
+    private int counter = 0;
+    private String count;
+    private String url = "http://romanyukeduard.github.io/cities.json";
+
+    private ProgressDialog mProgressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
 
-        txtResponse = (TextView) findViewById(R.id.teeest);
+        //txtResponse = (TextView) findViewById(R.id.teeest);
 
         initToolbar();
         initDrawer();
         initFAB();
         checkInternet();
 
-        /*ImageView img = (ImageView) findViewById(R.id.image);
-        Picasso.with(this).load(url).into(img);*/
+
+
+    }
+
+    private void ifInternetEnable() {
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.cities_rw);
+        mRecyclerView.addItemDecoration(
+                new HorizontalDividerItemDecoration
+                        .Builder(this)
+                        .color(Color.WHITE)
+                        .size(8)
+                        .build()
+        );
+
+        final LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+
+        cityRequest(url);
 
     }
 
@@ -76,14 +113,24 @@ public class MainActivity extends AppCompatActivity {
 
             disconnect.show();
         }
-        else{
-            cityRequest();
+        else {
+            ifInternetEnable();
         }
 
     }
 
-    private void cityRequest() {
-        JsonArrayRequest req = new JsonArrayRequest(places,
+    private void cityRequest(String url) {
+
+        counter = 0;
+
+        mAdapter = new MyRecyclerAdapter(MainActivity.this, mListItemsList);
+        mRecyclerView.setAdapter(mAdapter);
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        mAdapter.clearAdapter();
+
+        JsonArrayRequest req = new JsonArrayRequest(url,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
@@ -92,46 +139,39 @@ public class MainActivity extends AppCompatActivity {
                             jsonResponse = "";
                             for (int i = 0; i < response.length(); i++) {
 
-                                JSONObject places = (JSONObject) response
+                                JSONObject cities = (JSONObject) response
                                         .get(i);
 
-                                String id = places.getString("id");
-                                String city_id = places.getString("city_id");
-                                String name = places.getString("name");
-                                String coord_lat = places.getString("coord_lat");
-                                String coord_lng = places.getString("coord_lng");
-                                String category_id = places.getString("category_id");
-                                String photo_url = places.getString("photo_url");
+                                ListItems item = new ListItems();
 
-                                jsonResponse += "Id: " + id + "\n\n";
-                                jsonResponse += "City id: " + city_id + "\n\n";
+                                item.setTitle(cities.getString("name"));
+                                item.setImage(cities.getString("photo_url"));
+                                item.setCityId(cities.getString("id"));
+
+                                mListItemsList.add(item);
+
+                                /*jsonResponse += "Id: " + id + "\n\n";
                                 jsonResponse += "Name: " + name + "\n\n";
-                                jsonResponse += "Latitude: " + coord_lat + "\n\n";
-                                jsonResponse += "Longetude: " + coord_lng + "\n\n";
-                                jsonResponse += "Category id: " + category_id + "\n\n";
-                                jsonResponse += "Url: " + "http://goodbadcity.com" + photo_url + "\n\n";
+                                jsonResponse += "Url: " + "http://goodbadcity.com" + photo_url + "\n\n";*/
 
                             }
 
-                            txtResponse.setText(jsonResponse);
+                            //txtResponse.setText(jsonResponse);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(getApplicationContext(),
-                                    "Error: " + e.getMessage(),
-                                    Toast.LENGTH_LONG).show();
                         }
+                        mAdapter.notifyDataSetChanged();
 
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(),
-                        error.getMessage(), Toast.LENGTH_SHORT).show();
+
             }
         });
 
-        AppController.getInstance().addToRequestQueue(req);
+        queue.add(req);
     }
 
     private void initFAB() {
