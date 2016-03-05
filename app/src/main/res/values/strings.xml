@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name" translatable="false">Trip Guider v.2</string>
 
+    <string name="location_msg_title">Attention</string>
+    <string name="location_msg_content">If you want to use all the functions allow use your location</string>
+    <string name="location_msg_positive">Allow</string>
+    <string name="location_msg_negative">Cancel</string>
+
     <string name="internet_snack_txt">No internet connection</string>
     <string name="internet_snack_btn">Try again</string>
 

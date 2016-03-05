@@ -1,7 +1,9 @@
 package io.github.romanyukeduard.tripguider;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -12,8 +14,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -41,24 +44,21 @@ import io.github.romanyukeduard.tripguider.cities_recycler_view.MyRecyclerAdapte
 
 public class MainActivity extends AppCompatActivity {
 
-
     //"http://goodbadcity.com/trip/cities";//міста
     //"http://goodbadcity.com/trip/places/1";//місця
 
-    private TextView txtResponse;
-    private String jsonResponse;
+    private static final String MY_SETTINGS = "my_settings";
 
     private Drawer mDrawer;
     private Toolbar mToolbar;
     private FloatingActionButton mFAB;
 
+    private String url = "http://romanyukeduard.github.io/cities.json";
     private List<ListItems> mListItemsList = new ArrayList<ListItems>();
     private MyRecyclerAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private int counter = 0;
     private String count;
-    private String url = "http://romanyukeduard.github.io/cities.json";
-
     private ProgressDialog mProgressDialog;
 
     @Override
@@ -66,14 +66,36 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
 
-        //txtResponse = (TextView) findViewById(R.id.teeest);
+        SharedPreferences sp = getSharedPreferences(MY_SETTINGS,
+                Context.MODE_PRIVATE);
+        boolean hasVisited = sp.getBoolean("hasVisited", false);
+
+        if (!hasVisited) {
+
+            new MaterialDialog.Builder(this)
+                    .title(R.string.location_msg_title)
+                    .content(R.string.location_msg_content)
+                    .positiveText(R.string.location_msg_positive)
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(MaterialDialog dialog, DialogAction which) {
+                            startActivity(new Intent(
+                                    android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                        }
+                    })
+                    .negativeText(R.string.location_msg_negative)
+                    .show();
+
+            SharedPreferences.Editor e = sp.edit();
+            e.putBoolean("hasVisited", true);
+            e.apply();
+
+        }
 
         initToolbar();
         initDrawer();
         initFAB();
         checkInternet();
-
-
 
     }
 
@@ -136,7 +158,6 @@ public class MainActivity extends AppCompatActivity {
                     public void onResponse(JSONArray response) {
 
                         try {
-                            jsonResponse = "";
                             for (int i = 0; i < response.length(); i++) {
 
                                 JSONObject cities = (JSONObject) response
@@ -150,13 +171,7 @@ public class MainActivity extends AppCompatActivity {
 
                                 mListItemsList.add(item);
 
-                                /*jsonResponse += "Id: " + id + "\n\n";
-                                jsonResponse += "Name: " + name + "\n\n";
-                                jsonResponse += "Url: " + "http://goodbadcity.com" + photo_url + "\n\n";*/
-
                             }
-
-                            //txtResponse.setText(jsonResponse);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
